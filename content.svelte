@@ -16,25 +16,29 @@
   export const config: PlasmoCSConfig = {
     matches: ["https://*.twitter.com/*"]
   }
-
-  // export const mountShadowHost: PlasmoMountShadowHost = ({
-  //   anchor,
-  //   shadowHost
-  // }) => {
-  //   anchor!.element!.insertBefore(shadowHost!, anchor!.element!.firstChild)
-  // }
 </script>
 
 <script>
+  import { Storage } from "@plasmohq/storage"
+  import { onMount } from "svelte"
+
+  const storage = new Storage()
   let postToThreads = false
 
-  function handleToggle() {
+  async function handleToggle() {
     postToThreads = !postToThreads
+    await storage.set("postToThreads", postToThreads)
   }
+
+  onMount(async () => {
+    postToThreads = await storage.get("postToThreads")
+  })
 </script>
 
 <div>
-  <button class="btn btn-xs btn-primary" on:click={handleToggle}>
+  <button
+    class="btn btn-xs rounded-full btn-primary ml-4"
+    on:click={handleToggle}>
     Post to threads: {postToThreads ? "✅" : "❌"}
   </button>
 </div>

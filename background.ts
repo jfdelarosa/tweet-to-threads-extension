@@ -1,9 +1,19 @@
+import { Storage } from "@plasmohq/storage"
+
 import { login } from "./utils/Threads"
 
 export {}
 
+const storage = new Storage()
+
 chrome.webRequest.onBeforeRequest.addListener(
-  function (details) {
+  async function (details) {
+    const postToThreads = await storage.get("postToThreads")
+
+    if (!postToThreads) {
+      return
+    }
+
     const bodyStr = String.fromCharCode.apply(
       null,
       new Uint8Array(details.requestBody.raw[0].bytes)
