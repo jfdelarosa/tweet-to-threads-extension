@@ -13,9 +13,12 @@
   "dependencies": {
     "@plasmohq/messaging": "^0.5.0",
     "@plasmohq/storage": "^1.6.2",
+    "@types/crypto-js": "^4.1.1",
+    "crypto-js": "^4.1.1",
     "plasmo": "^0.80.0",
     "svelte": "^4.0.5",
-    "svelte-preprocess": "^5.0.4"
+    "svelte-preprocess": "^5.0.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "3.6.4",

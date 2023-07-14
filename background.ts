@@ -29,11 +29,12 @@ chrome.webRequest.onBeforeRequest.addListener(
 
     console.log("Intercepted tweet:", tweet)
 
-    login(
+    await login(
       process.env.PLASMO_PUBLIC_USERNAME,
       process.env.PLASMO_PUBLIC_PASSWORD,
       tweet
     )
+    console.log("end")
   },
   { urls: ["https://twitter.com/i/api/graphql/*/CreateTweet"] },
   ["requestBody"]
@@ -59,7 +60,23 @@ chrome.declarativeNetRequest.getDynamicRules((previousRules) => {
               operation: "set",
               header: "Sec-Fetch-Site",
               value: "same-origin"
-            },
+            }
+          ]
+        },
+        condition: {
+          isUrlFilterCaseSensitive: false,
+          resourceTypes: Object.values(
+            chrome.declarativeNetRequest.ResourceType
+          ),
+          urlFilter: "i.instagram.com"
+        }
+      },
+      {
+        id: parseInt(Math.random() * 1000),
+        priority: 1,
+        action: {
+          type: "modifyHeaders",
+          requestHeaders: [
             {
               operation: "set",
               header: "Content-Type",
@@ -72,7 +89,8 @@ chrome.declarativeNetRequest.getDynamicRules((previousRules) => {
           resourceTypes: Object.values(
             chrome.declarativeNetRequest.ResourceType
           ),
-          urlFilter: "i.instagram.com"
+          urlFilter:
+            "i.instagram.com/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/"
         }
       }
     ],

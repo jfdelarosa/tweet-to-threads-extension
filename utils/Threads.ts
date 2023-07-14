@@ -1,4 +1,5 @@
 import { getToken } from "./Bloks"
+import { encryptPassword } from "./encrypt"
 
 const androidId = (Math.random() * 1e24).toString(36)
 
@@ -6,10 +7,17 @@ export async function login(username, password, tweet) {
   const base = "https://i.instagram.com"
   const loginUrl =
     "/api/v1/bloks/apps/com.bloks.www.bloks.caa.login.async.send_login_request/"
+  const blocks_version =
+    "5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73"
+
+  console.log("kmdekmd")
+  const encryptedPassword = await encryptPassword(password)
+
+  console.log({ encryptPassword })
 
   const params = {
     client_input_params: {
-      password: password,
+      password: `#PWD_INSTAGRAM:4:${encryptedPassword.time}:${encryptedPassword.password}`,
       contact_point: username,
       device_id: `android-${androidId}`
     },
@@ -23,7 +31,7 @@ export async function login(username, password, tweet) {
     method: "POST",
     body: `params=${encodeURIComponent(
       JSON.stringify(params)
-    )}&bloks_versioning_id=00ba6fa565c3c707243ad976fa30a071a625f2a3d158d9412091176fe35027d8`
+    )}&bloks_versioning_id=${blocks_version}`
   }
 
   const response = await fetch(base + loginUrl, requestOptions)
