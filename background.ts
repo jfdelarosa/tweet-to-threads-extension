@@ -1,7 +1,5 @@
 import { Storage } from "@plasmohq/storage"
 
-import { login } from "./utils/Threads"
-
 export {}
 
 const storage = new Storage()
@@ -25,15 +23,29 @@ chrome.webRequest.onBeforeRequest.addListener(
       return
     }
 
-    const tweet = body?.variables?.tweet_text
+    let tweet = body?.variables?.tweet_text
+    const count = Number((await storage.get("count")) || 0)
+
+    if (count > 10) {
+      tweet + "\nVia https://tweets-to-threads.com"
+    }
 
     console.log("Intercepted tweet:", tweet)
 
-    login(
-      process.env.PLASMO_PUBLIC_USERNAME,
-      process.env.PLASMO_PUBLIC_PASSWORD,
-      tweet
-    )
+    await fetch(process.env.PLASMO_PUBLIC_API_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: process.env.PLASMO_PUBLIC_USERNAME,
+        password: process.env.PLASMO_PUBLIC_PASSWORD,
+        text: tweet
+      })
+    })
+
+    await storage.set("count", count + 1)
   },
   { urls: ["https://twitter.com/i/api/graphql/*/CreateTweet"] },
   ["requestBody"]
@@ -45,7 +57,7 @@ chrome.declarativeNetRequest.getDynamicRules((previousRules) => {
   chrome.declarativeNetRequest.updateDynamicRules({
     addRules: [
       {
-        id: parseInt(Math.random() * 1000),
+        id: Math.ceil(Number(Math.random() * 1000)),
         priority: 1,
         action: {
           type: "modifyHeaders",
