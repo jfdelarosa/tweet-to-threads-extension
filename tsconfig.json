@@ -7,6 +7,6 @@
       "~*": ["./*"]
     },
     "baseUrl": ".",
-    "types": ["svelte"]
+    "types": ["chrome", "svelte", "node"]
   }
 }

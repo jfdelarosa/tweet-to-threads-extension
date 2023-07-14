@@ -35,9 +35,9 @@
   })
 </script>
 
-<div>
+<div class="pt-[1px] ml-2">
   <button
-    class="btn btn-xs rounded-full btn-primary ml-4"
+    class="btn btn-xs rounded-full btn-primary border-slate-300 text-blue-500"
     on:click={handleToggle}>
     Post to threads: {postToThreads ? "✅" : "❌"}
   </button>
