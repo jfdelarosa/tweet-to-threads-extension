@@ -1,8 +1,8 @@
 {
-  "name": "crosspost",
-  "displayName": "Crosspost",
+  "name": "tweets-to-threads",
+  "displayName": "Tweets to Threads",
   "version": "0.0.1",
-  "description": "Crosspost Tweets into thread",
+  "description": "Cross-post Tweets to Threads",
   "author": "jfdelarosa",
   "packageManager": "npm@9.5.0",
   "scripts": {
