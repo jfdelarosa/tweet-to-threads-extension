@@ -1,5 +1,5 @@
-import { intercept } from "./src/intercept"
-import { getRuleset } from "./src/rules"
+import { intercept } from "./utils/intercept"
+import { getRuleset } from "./utils/rules"
 
 export {}
 
