@@ -7,6 +7,7 @@ Extension to automatically crosspost tweets to threads.
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
+- Run the [Tweet-to-threads extension server](https://github.com/jfdelarosa/tweet-to-threads-server)
 
 ### Install
 
@@ -35,7 +36,6 @@ npm run build
 ```
 
 ### Installing the extension
-
 
 1. Go to the extensions page:
 
